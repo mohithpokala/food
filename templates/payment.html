@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+<style>
+body {
+  font-family: Arial;
+  font-size: 17px;
+  padding: 8px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.row {
+  display: -ms-flexbox; /* IE10 */
+  display: flex;
+  -ms-flex-wrap: wrap; /* IE10 */
+  flex-wrap: wrap;
+  margin: 0 -16px;
+}
+
+.col-25 {
+  -ms-flex: 25%; /* IE10 */
+  flex: 25%;
+}
+
+.col-50 {
+  -ms-flex: 50%; /* IE10 */
+  flex: 50%;
+}
+
+.col-75 {
+  -ms-flex: 75%; /* IE10 */
+  flex: 75%;
+}
+
+.col-25,
+.col-50,
+.col-75 {
+  padding: 0 16px;
+}
+
+.container {
+  background-color: #f2f2f2;
+  padding: 5px 20px 15px 20px;
+  border: 1px solid lightgrey;
+  border-radius: 3px;
+}
+
+input[type=text] {
+  width: 100%;
+  margin-bottom: 20px;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+label {
+  margin-bottom: 10px;
+  display: block;
+}
+
+.icon-container {
+  margin-bottom: 20px;
+  padding: 7px 0;
+  font-size: 24px;
+}
+
+.btn {
+  background-color: #4CAF50;
+  color: white;
+  padding: 12px;
+  margin: 10px 0;
+  border: none;
+  width: 100%;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 17px;
+}
+
+.btn:hover {
+  background-color: #45a049;
+}
+
+a {
+  color: #2196F3;
+}
+
+hr {
+  border: 1px solid lightgrey;
+}
+
+span.price {
+  float: right;
+  color: grey;
+}
+
+/* Responsive layout - when the screen is less than 800px wide, make the two columns stack on top of each other instead of next to each other (also change the direction - make the "cart" column go on top) */
+@media (max-width: 800px) {
+  .row {
+    flex-direction: column-reverse;
+  }
+  .col-25 {
+    margin-bottom: 20px;
+  }
+}
+</style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="position: fixed;z-index: 1;width:100%">
+        <a class="navbar-brand" href="#"><h2>Foodzie></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item"><a class="nav-link" href="#">Welcome {{user.username}}</a></li>
+                  <li class="nav-item active">
+                    <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+                  </li>
+                  
+                  <li class="nav-item active">
+                      <a class="nav-link" href="/payment">Checkout</a>
+                  </li>
+                  
+                  
+                  
+                  <li class="nav-item">
+                    <a class="nav-link" href="/contact">Contact</a>
+                  </li>
+                  
+                  <li class="nav-item">
+                    <a class="nav-link" href="/logoutUser">Logout</a>
+                  </li>
+                  
+                </ul>
+        </div>
+      </nav>
+<div class="row" style="top:130px;position: absolute;width:100%">
+  <div class="col-75">
+    <div class="container">
+        {% for a in address %}
+            <form class = form action = '/address/' method = 'post'>
+                {% csrf_token %}
+                
+                <div class = section>
+                   <button type = submit name = old value={{a.id}} class = options>
+                       Use {{a.name}}'s address for delivery<br>
+                       <span class = subtext>{{a.house}},,{{a.street}},{{a.city}}-{{a.pincode}}</span>
+                    </button>
+                </div> 
+            </form>
+         {% endfor %}
+      <form action="/address/" method="POST">
+        {% csrf_token %}
+        <div class="row">
+          <div class="col-50">
+            <h3>Billing Address</h3>
+            <label for="name"><i class="fa fa-user"></i> <b>Full Name</b></label>
+            <input type="text" id="name" name="name" placeholder="Your name...">
+            <label for="email"><i class="fa fa-envelope"></i> <b>Email</b></label>
+            <input type="text" id="email" name="email" placeholder="Email id....">
+            <label for="phone"><i class="fa fa-phone"></i> <b>Phone Numner</b></label>
+            <input type="number" id="phone" name="phone" placeholder="7689912361">
+            <label for="house"><i class="fa fa-address-card-o"></i> <b>Address Line 1</b></label>
+            <input type="text" id="house" name="house" placeholder="House Number">
+            <label for="street"><i class="fa fa-address-card-o"></i> <b>Address Line 2</b></label>
+            <input type="text" id="street" name="street" placeholder="Street Name..">
+            <label for="city"><i class="fa fa-institution"></i> City</label>
+            <select id="city" name="city" style="width: 20%;height:40px">
+                <option value="Hyderabad">Hyderabad</option>
+                <option value="Mumbai">Mumbai</option>
+                <option value="Chennai">Chennai</option>
+                <option value="Vizag">Vizag</option>
+                <option value="Bangalore">Bangalore</option>
+                <option value="Delhi">Delhi</option>
+                <option value="Pune">Pune</option>
+                <option value="Kolkata">Kolkata</option>
+              </select>
+
+            <div class="row">
+              
+              <div class="col-50">
+                <label for="pincode">Pincode</label>
+                <input type="text" id="pincode" name="pincode" placeholder="500036">
+              </div>
+            </div>
+          </div>
+
+          
+          
+        </div>
+      
+        <input type="submit" value="Continue to checkout" class="btn">
+      </form>
+    </div>
+  </div>
+  <div class="col-25">
+    <div class="container">
+      <h4>Cart <span class="price" style="color:black"><i class="fa fa-shopping-cart"></i> <b>{{num}}</b></span></h4>
+      {% for item in items %}
+      <p><a href="#" style="text-decoration: none;color:deepskyblue">{{item.name}}</a>{{item.quantity}} <span class="price">{{item.price}}*{{item.number}}={{item.totalprice}}</span></p>
+      {% endfor %}
+      <hr>
+      <p>Total <span class="price" style="color:black"><b>{{sum}}</b></span></p>
+    </div>
+  </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+</body>
+</html>

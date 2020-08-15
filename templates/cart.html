@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+
+    <title>Hello,{{user.username}}!</title>
+    <style>
+      .row{display: flex;justify-content: space-around;width: 100%;flex-wrap: wrap;}
+      .card:hover{
+        border:1px solid black;
+      }
+      img{height:200px;}
+      .card-text{text-align:center;}
+     .card{margin-left:22%;box-shadow: 5px 10px 18px #888888;}
+     body{}
+     .col-sm-4{padding-top: 20px;}
+     .btn-primary{text-align: center;}
+    .x{left: 40%;}
+    .card-body a{margin-left:25%;}
+    a:hover{color:chartreuse}
+    </style>
+  </head>
+  <body>
+    
+    {% load static %}
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <a class="navbar-brand" href="#"><h2>Foodzie></a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+    
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item"><a class="nav-link" href="#">Welcome {{user.username}} ....</a></li>
+                <li class="nav-item ">
+                  <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+                </li>
+                
+                <li class="nav-item">
+                    <a class="nav-link" href="/payment">Payment</a>
+                </li>
+                
+                
+                
+                <li class="nav-item">
+                  <a class="nav-link" href="/contact">Contact</a>
+                </li>
+                
+                <li class="nav-item">
+                  <a class="nav-link" href="/logoutUser">Logout</a>
+                </li>
+                
+              </ul>
+      </div>
+    </nav>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+    <div class="row" style="position: fixed;top:0px;z-index: 1;" >
+      {% if messages %}
+        {% for message in messages %}
+    
+        <div class="alert alert-{{ message.tags }} alert-dismissible fade show my-0" role="alert" style="top:0px">
+          <strong>{{ message }}</strong>
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        {% endfor %}
+      {% endif %}
+     
+    </div>
+    <br><br><br><br>
+
+    <div class="container" styele="left:10%">
+      <div class="card">
+        <div class="card-header">
+          Invoice
+          <strong>{{date}}</strong> 
+          <span class="float-right"> <strong>Status:</strong>Shipped</span>
+        </div>
+        <div class="card-body">
+          <div class="row mb-4">
+            <div class="col-sm-6">
+              <h6 class="mb-3">From:</h6>
+              <div>
+                <strong>Foodzie</strong>
+              </div>
+        
+              <div>71-101 Hyderabad,India</div>
+              <div>Email: foodzie@gmail.com.pl</div>
+              <div>Phone: +91 8783478784</div>
+            </div>
+            <div class="col-sm-6">
+              <h6 class="mb-3">To:</h6>
+              <div>
+                <strong>{{address.name}}</strong>
+              </div>
+                <div>{{adreess.house}},{{address.street}}</div>
+                <div>{{address.city}}</div>
+                <div>Email:{{adress.email}}</div>
+                <div>Phone:{{address.phone}}</div>
+              </div>
+            </div>
+    
+          <div class="table-responsive-sm">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th scope="col">Name</th>
+                  <th scope="col">Price</th>
+                  <th scope="col">Quantity</th>
+                  <th scope="col">Cost</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for item in items %}
+                  <tr>
+                    <td>{{item.name}}</td>
+                    <td>{{item.price}}</td>
+                    <td>{{item.number}}</td>
+                    <td>{{item.totalprice}}</td>
+                  </tr>
+                {% empty %}
+                  <tr>
+                    <td>No items in your cart</td>
+                    <td>0/-</td>
+                    <td>0/-</td>
+                    <td>0/-</td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <button name=id  type=submit class="btn btn-success" style="background-color:black;left:50%;width:20%;position: absolute;"><a style="text-align: center;color:white"href="/dell"><h4>Place Order</h4></a></button>
+
+
+</body>
+</html>
+<script>
+
+
+</script>
