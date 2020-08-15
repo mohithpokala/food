@@ -165,7 +165,7 @@ def payment(request):
         'sum':sum,
         'num':num,
         'address':address.objects.filter(user=request.user)
-    }
+        }
     return render(request,'payment.html',context)    
 def contact(request):
     if request.method == "POST":
